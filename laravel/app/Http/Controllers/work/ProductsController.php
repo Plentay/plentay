@@ -55,7 +55,7 @@ class ProductsController extends Controller
             ->selected(1)
             ->renderAsDropdown();
       return view('work.product.create')
-      ->with('users',User::all())
+      ->with('users',User::where('role_id', '=','0')->get())
       ->with ('categories',$categories)
       ;
     }
@@ -141,7 +141,7 @@ class ProductsController extends Controller
         ->with('product',$product)
         ->with ('categories',$categories)
         ->with ('product_image',$product_image)//dual function
-        ->with('users',User::all())
+        ->with('users',User::where('role_id', '=','0')->get()) 
         ;
 
     ;
@@ -285,7 +285,7 @@ public function import()
         ->renderAsDropdown();
   return view('work.product.import')
   ->with ('files',$files)
-  ->with('users',User::all())
+  ->with('users',User::where('role_id', '=','0')->get())
   ->with ('categories',$categories);
 }
 public function csv_upload(Request $request)
@@ -528,7 +528,7 @@ return redirect()->back()->with('message',"<div class='text-center'
         unlink($product->image);
       }
       Product::destroy($id);
-      Session::flash('info', ' Deleted Successfully');
+      Session::flash('info', 'Deleted Successfully');
       return redirect()->back();
     }
 }

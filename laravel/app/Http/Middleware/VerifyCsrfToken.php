@@ -13,6 +13,12 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/account/gateway/voguepay_success',
-    	'/account/gateway/voguepay_fail'
+    	'/account/gateway/voguepay_fail',
+    	'/api/contact-us',
+    	'/api/childCategory',
+    	'/api/productDetail',
+    	'/api/products',
+    	'/api/company-registration',
+    	'/api/login'
     ];
 }

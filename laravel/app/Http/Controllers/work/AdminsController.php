@@ -10,8 +10,10 @@ use App\Product;
 use App\User;
 use App\Invoice;
 use App\Setting;
+use App\Category;
 use Session;
 use DataTables;
+
 class AdminsController extends Controller
 {
   public function __construct()
@@ -67,17 +69,21 @@ class AdminsController extends Controller
 
     public function index()
     {
+
       $admin = Auth::user();
       $settings =Setting::first();
       $products = Product::all();
       $products_count = Product::all()->count();
       $products_impressions = collect($products)->sum('views_count');
       $products_clicks = collect($products)->sum('click_count');
+      $category_count = Category::where('parent_id', '=', 1)->count();
       $users = User::all();
       $users_count = User::where('role_id', '!=',0)->where('active', '=',1)->count();
       $users_credits = collect($users)->sum('credit');
       $inactive_users =User::where('active', '=',0)->count();
       $marchant_users =User::where('role_id', '=',0)->where('active', '=',1)->count();
+      $company_users =User::where('role_id', '=',1)->where('active', '=',1)->count();
+      $register_users =User::where('role_id', '>',1)->where('active', '=',1)->count();
 
         return view('work.index')
         ->with('admin', $admin)
@@ -89,11 +95,14 @@ class AdminsController extends Controller
         ->with('users_count', $users_count)
         ->with('users_credits', $users_credits)
         ->with('marchant_users', $marchant_users)
+        ->with('company_users', $company_users)
+        ->with('register_users', $register_users)
+        ->with('category_count', $category_count)
         ->with('users',User::all())
-        ->with('invoices',Invoice::take(10)->get())
+        ->with('invoices',Invoice::take(10)->get());
         // ->with('invoices',Invoice::take(10)->orderBy('id', 'desc')->get())
 
-        ;
+       
     }
     // public function user()
     // {

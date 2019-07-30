@@ -116,6 +116,16 @@ class ApiController extends Controller
   public function childCategory(Request $request)
   {
       $category_id = $request->input('category_id');
+
+      if(empty($category_id)){
+        $responce = array('status' => 0,
+                      'error_code' => 0,
+                      'error_line' => __line__,
+                      'message' => 'Please send category id.'
+                      );
+        return  $responce; 
+      }
+
       $result = Category::where('parent_id',$category_id)->get();
       if(count($result) > 0){
         foreach ($result as $key => $value) {
@@ -144,6 +154,14 @@ class ApiController extends Controller
   public function productDetail(Request $request)
   {
       $product_id = $request->input('product_id');
+      if(empty($product_id)){
+        $responce = array('status' => 0,
+                      'error_code' => 0,
+                      'error_line' => __line__,
+                      'message' => 'Please send product id.'
+                      );
+        return  $responce; 
+      }
       $result = DB::table('products as p')
             ->join('categories as c', 'c.id', '=', 'p.category_id')
             ->join('users as u', 'u.id', '=', 'p.user_id')
@@ -274,11 +292,27 @@ class ApiController extends Controller
   }
 
   //login
-  //Company Registration 
   public function login(Request $request)
   {
       $email = $request->input('email');
       $password  = $request->input('password');
+
+      if(empty($email)){
+        $responce = array('status' => 0,
+                      'error_code' => 0,
+                      'error_line' => __line__,
+                      'message' => 'Please send email id'
+                      );
+        return  $responce; 
+      }else if(empty($password)){
+        $responce = array('status' => 0,
+                      'error_code' => 0,
+                      'error_line' => __line__,
+                      'message' => 'Please send password'
+                      );
+        return  $responce; 
+      }
+
       
       $result = User::where('email',$email)->get();
       if(count($result) < 1){
