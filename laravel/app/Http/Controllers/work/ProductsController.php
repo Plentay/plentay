@@ -9,6 +9,7 @@ use App\Category;
 use App\Product;
 use App\User;
 use App\Currency;
+use App\Brand;
 use App\Setting;
 use Session;
 use DataTables;
@@ -38,7 +39,7 @@ class ProductsController extends Controller
         $products = Product::orderBy('id', 'desc')->paginate(10);
       }
 
-      // dd($products);
+     
       return view('work.product.index')
       ->with('query',$query)
       ->with('products',$products);
@@ -56,6 +57,7 @@ class ProductsController extends Controller
             ->renderAsDropdown();
       return view('work.product.create')
       ->with('users',User::where('role_id', '=','0')->get())
+      ->with('brands',Brand::all())
       ->with ('categories',$categories)
       ;
     }
@@ -75,6 +77,9 @@ class ProductsController extends Controller
         'original_url'=>'required',
         'affiliate_url'=>'required',
         'user_id'=>'required',
+
+        'brand_id'=>'required',
+
         'amount'=>'required|numeric|between:0,999999999999999999999999999.99',
       ]);
 
@@ -92,6 +97,7 @@ class ProductsController extends Controller
           'name'=>$request->name,
           'description'=>$request->description,
           'category_id'=>$request->category_id,
+          'brand_id' => $request->brand_id,
           'amount'=>$request->amount,
           'user_id'=>$request->user_id,
           'original_url'=>$request->original_url,
@@ -140,6 +146,7 @@ class ProductsController extends Controller
         return view('work.product.edit')
         ->with('product',$product)
         ->with ('categories',$categories)
+        ->with('brands',Brand::all())
         ->with ('product_image',$product_image)//dual function
         ->with('users',User::where('role_id', '=','0')->get()) 
         ;
@@ -163,6 +170,7 @@ class ProductsController extends Controller
         'original_url'=>'required',
         'affiliate_url'=>'required',
         'user_id'=>'required',
+        'brand_id'=>'required',
         'amount'=>'required|numeric|between:0,999999999999999999999999999.99',
       ]);
       if ($request->hasFile('image')){
@@ -178,6 +186,7 @@ class ProductsController extends Controller
       $product-> name = $request->name;
       $product-> description = $request->description;
       $product-> category_id = $request->category_id;
+      $product-> brand_id = $request->brand_id;
       $product-> amount = $request->amount;
       $product-> user_id = $request->user_id;
       $product-> original_url = $request->original_url;

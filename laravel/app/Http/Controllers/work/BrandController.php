@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Brand;
 use App\Slider;
+use App\Category;
 use App\Setting;
 use Session;
 use DataTables;
@@ -28,6 +29,27 @@ class BrandController extends Controller
         ->with('last_slide',Brand::orderBy('created_at','desc')->first());
     }
 
+
+    public function brandsCategory()
+    {
+        return view('work.brand.brandsCategory')
+        ->with('brands',Brand::all())
+         ->with('categorys',Category::where('parent_id', '=','1')->get())
+        ->with('last_slide',Brand::orderBy('created_at','desc')->first());
+    }
+
+     public function brandsCategoryStore(Request $request)
+    {
+        dd($request); die;
+     /* $this->validate($request,[
+      'category'=>'required',
+      'brand'=>'required',
+    ]);*/
+    
+      return redirect()->route('work.brands.category');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -47,7 +69,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
       $this->validate($request,[
-      'url'=>'required',
+      'title'=>'required',
       'image'=>'required|image',
     ]);
     $image = $request->image;

@@ -10,4 +10,8 @@ class Brand extends Model
     'title',
     'image',
   ];
+
+  public function products(){
+      return $this->hasMany('App\Product');
+    }
 }

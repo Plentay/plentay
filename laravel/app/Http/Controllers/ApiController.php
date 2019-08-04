@@ -21,6 +21,12 @@ use DB;
   
 class ApiController extends Controller
 {
+
+  function __construct() {
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, X-Access-Token,X-Key, Content-Type, Accept, Access-Control-Request-Method,version,lang,user_id,token");
+  }
   // about us
   public function aboutUs()
   {
@@ -77,6 +83,26 @@ class ApiController extends Controller
     return  $responce;
   }
 
+  // Brands
+  public function brands()
+  {
+    $result = DB::table('brands')->orderBy('id', 'asc')->get();
+    if(count($result) > 0){
+          $responce = array('status' => 1,
+                      'error_code' => 0,
+                      'error_line' => __line__,
+                      'result' => $result
+                      );
+    }else{
+        $responce = array('status' => 0,
+                      'error_code' => 0,
+                      'error_line' => __line__,
+                      'message' => 'Not found sliders'
+                      );
+    }
+    return  $responce;
+  }
+
   // contact us
   public function contact_send(Request $request)
   {
@@ -100,6 +126,67 @@ class ApiController extends Controller
     return  $responce;
   }
 
+
+  //Parent Child Categoty
+public function allCategory()
+{
+  $result = Category::where('parent_id','1')->get();
+  if(count($result) > 0){
+        $sts = array();
+    foreach ($result as $key => $value) {
+          $category_id = $value['id'];
+          $st = $this->chield_category($category_id);
+          $sts[] = array('parent' => $value,
+                        'chield_category' => $st);
+      }
+  }
+          $responce = array('status' => 1,
+                      'error_code' => 0,
+                      'error_line' => __line__,
+                      'result' => $sts
+                    );
+    return  $responce;
+}
+
+public function chield_category($category_id)
+{
+   $sts = array();
+   $result = Category::where('parent_id',$category_id)->get();
+
+   if(!empty($result) && count($result) > 0){
+   foreach ($result as $key => $value) {
+          $category_id = $value['id'];
+          $st = $this->sub_chield_category($category_id);
+          $sts[] = array('id' => $value['id'],
+                       'parent_id' => $value['parent_id'],
+                       'name' => $value['name'],
+                       'slug' => $value['slug'],
+                       'description' => $value['description'],
+                       'sub_chield_category' => $st
+                     );
+      }
+ }
+  return $sts;
+}
+
+
+public function sub_chield_category($category_id)
+{
+   $sts = array();
+   $result = Category::where('parent_id',$category_id)->get();
+
+   if(!empty($result) && count($result) > 0){
+   foreach ($result as $key => $value) {
+         $sts[] = array('id' => $value['id'],
+                       'parent_id' => $value['parent_id'],
+                       'name' => $value['name'],
+                       'slug' => $value['slug'],
+                       'description' => $value['description'],
+                     );
+      }
+ }
+  return $sts;
+}
   //Parent Categoty
   public function parentCategory()
   {
@@ -164,17 +251,54 @@ class ApiController extends Controller
       }
       $result = DB::table('products as p')
             ->join('categories as c', 'c.id', '=', 'p.category_id')
+            ->join('brands as b', 'b.id', '=', 'p.brand_id')
             ->join('users as u', 'u.id', '=', 'p.user_id')
             ->where('p.active', '=', 1)
             ->where('p.id', '=', $product_id)
-            ->select('p.*', 'c.name as category_name', 'c.name as category_description','u.name', 'u.email', 'u.contact_name','u.address','u.url','u.image','u.about','u.phone_number')
+            ->select('p.*', 'p.amount as price', 'p.image as pictures', 'p.description as shortDetails', 'p.description as description',   'b.title as brand_name', 'b.image as brand_image', 'c.name as category', 'c.name as category_description','u.name as marchant_name', 'u.email', 'u.contact_name','u.address','u.url','u.image','u.about','u.phone_number')
+            ->addSelect(DB::raw("'' as salePrice"))
+            ->addSelect(DB::raw("'' as discount"))
+            ->addSelect(DB::raw("'250' as stock"))
+            ->addSelect(DB::raw("'true' as new"))
+            ->addSelect(DB::raw("'true' as sale"))
+            ->addSelect(DB::raw("'' as colors"))
+            ->addSelect(DB::raw("'' as size"))
+            ->addSelect(DB::raw("'' as tags"))
+            ->addSelect(DB::raw("'' as variants"))
             ->get();
 
       if(count($result) > 0){
+         foreach ($result as $key => $value) {
+          $value = (array)$value; 
+         // echo '<pre/>'; print_r($value); die; 
+          $colors = array();
+          $size = array();
+          $tags = array($value['category_name']);
+          $variants = array();
+          $pictures = array($value['pictures']);
+
+          $data[] = array("id" => $value['id'],
+                          "name" => $value['name'],
+                          "price" => $value['price'],
+                           "salePrice" => $value['price'],
+                           "discount" => $value['discount'],
+                           "pictures" => $pictures,
+                           "shortDetails" => $value['description'],
+                           "description" => $value['description'],
+                           "stock" => $value['stock'],
+                           "new" => $value['new'],
+                           "sale" => $value['sale'],
+                           "category" => $value['category_name'],
+                           "colors" => $colors,
+                           "size" => $size,
+                           "tags" => $tags,
+                           "variants" => $variants
+                        );
+        }
           $responce = array('status' => 1,
                       'error_code' => 0,
                       'error_line' => __line__,
-                      'result' => $result
+                      'result' => $data
                       );
       }else{
         $responce = array('status' => 0,
@@ -192,17 +316,55 @@ class ApiController extends Controller
       $types = $request->input('types');
       $result = DB::table('products as p')
             ->join('categories as c', 'c.id', '=', 'p.category_id')
+            ->join('brands as b', 'b.id', '=', 'p.brand_id')
             ->join('users as u', 'u.id', '=', 'p.user_id')
             ->where('p.active', '=', 1)
            // ->where('p.id', '=', $product_id)
-            ->select('p.*', 'c.name as category_name', 'c.name as category_description','u.name', 'u.email', 'u.contact_name','u.address','u.url','u.image','u.about','u.phone_number')
+            ->select('p.*',  'p.amount as price', 'p.image as pictures', 'p.description as shortDetails', 'p.description as description','b.title as brand_name', 'b.image as brand_image','c.name as category_name', 'c.name as category_description','u.name as marchant_name', 'u.email', 'u.contact_name','u.address','u.url','u.image','u.about','u.phone_number')
+             ->addSelect(DB::raw("'' as salePrice"))
+            ->addSelect(DB::raw("'' as discount"))
+            ->addSelect(DB::raw("'' as stock"))
+            ->addSelect(DB::raw("'true' as new"))
+            ->addSelect(DB::raw("'true' as sale"))
+            ->addSelect(DB::raw("'' as colors"))
+            ->addSelect(DB::raw("'' as size"))
+            ->addSelect(DB::raw("'' as tags"))
+            ->addSelect(DB::raw("'' as variants"))
+            ->limit(25)
             ->get();
 
       if(count($result) > 0){
+         foreach ($result as $key => $value) {
+          $value = (array)$value; 
+         // echo '<pre/>'; print_r($value); die; 
+          $colors = array();
+          $size = array();
+          $tags = array($value['category_name']);
+          $variants = array();
+          $pictures = array($value['pictures']);
+
+          $data[] = array("id" => $value['id'],
+                          "name" => $value['name'],
+                          "price" => $value['price'],
+                           "salePrice" => $value['price'],
+                           "discount" => $value['discount'],
+                           "pictures" => $pictures,
+                           "shortDetails" => $value['description'],
+                           "description" => $value['description'],
+                           "stock" => $value['stock'],
+                           "new" => $value['new'],
+                            "sale" => $value['sale'],
+                            "category" => $value['category_name'],
+                            "colors" => $colors,
+                            "size" => $size,
+                            "tags" => $tags,
+                            "variants" => $variants
+                        );
+        }
           $responce = array('status' => 1,
                       'error_code' => 0,
                       'error_line' => __line__,
-                      'result' => $result
+                      'result' => $data
                       );
       }else{
         $responce = array('status' => 0,
