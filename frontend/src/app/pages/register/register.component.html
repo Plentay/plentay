@@ -1,0 +1,81 @@
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>create account</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/home/one'">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">create account</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!-- section start -->
+<section class="register-page section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>create account</h3>
+                <div class="theme-card">
+                    <form [formGroup]="registrationForm" class="theme-form">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="email">Full Name</label>
+                                <input type="text" #username name="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" formControlName="username"  placeholder="Full Name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" #email name="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" formControlName="email"  placeholder="Email">
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                             
+                            <div class="col-md-6">
+                                <label for="review">Password</label>
+                                <input type="password" #password name="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" formControlName="password" placeholder="Password">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="review">Contact Name</label>
+                                <input type="text" #contactname name="contactname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contactname.errors }" formControlName="contactname" placeholder="Contact Name">
+                            </div>
+                            
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="email">Address</label>
+                                <input type="text" #address name="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address" placeholder="Address">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">Url</label>
+                                <input type="text" #url name="url" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.url.errors }" formControlName="url"  placeholder="Url">
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="email">Phone</label>
+                                <input type="text" #phone name="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" formControlName="phone" placeholder="Phone">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">About</label>
+                                <textarea #about name="about" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.about.errors }" formControlName="about"  placeholder="About"></textarea>
+                            </div>
+                           <button class="btn btn-solid" (click) = "onClickSubmit(registrationForm.value)">create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section ends-->

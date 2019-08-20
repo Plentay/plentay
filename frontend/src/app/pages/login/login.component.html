@@ -1,0 +1,94 @@
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>customer's login</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/home/one'">Home</a></li>
+                        <li class="breadcrumb-item active" >login</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!-- section start -->
+<section class="login-page section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h3>Login</h3>
+                <div class="theme-card">
+                  <div *ngIf="!loginTrue">
+                    <div *ngIf="showValidationError" class="from-group">
+                        <div [innerHTML]="validationErrorHtml"></div>
+                    </div>
+                    <form 
+                        class="theme-form"
+                        [formGroup]="loginForm" 
+                        (ngSubmit)="onLogin()"
+                        id="login-form" 
+                        accept-charset="utf-8"
+                    >
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input formControlName="email" [formGroup]="loginForm" type="text" class="form-control" id="email" placeholder="Email" required="">
+                            <div *ngIf="loginForm.controls.email.invalid && 
+                                (loginForm.controls.email.dirty || 
+                                loginForm.controls.email.touched)"
+                                class="text-danger mt-1"
+                            >
+                                <div *ngIf="loginForm.controls.email.errors.required">
+                                    Email is required
+                                </div>
+                                <div *ngIf="loginForm.controls.email.errors.email">
+                                    Invalid Email format
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review">Password</label>
+                            <input formControlName="password" [formGroup]="loginForm" type="password" class="form-control" id="review" placeholder="Enter your password" required="">
+                            <div *ngIf="loginForm.controls.password.invalid && 
+                                (loginForm.controls.password.dirty || 
+                                loginForm.controls.password.touched)"
+                                class="text-danger mt-1"
+                            >
+                                <div *ngIf="loginForm.controls.password.errors.required">
+                                    Password is required
+                                </div>
+                            </div>
+                        </div>
+                        <button [disabled]="loginForm.invalid" class="btn btn-solid">Login</button>
+                    </form>
+                  </div>
+                  <div *ngIf="loginTrue">
+                    <div class="form-row">
+                        <div class="col-md-12 ">
+                            <div class="alert alert-success mt-3">
+                                You have successfully logged in.
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-6 right-login">
+                <h3>New Customer</h3>
+                <div class="theme-card authentication-right">
+                    <h6 class="title-font">Create A Account</h6>
+                    <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shop. To start shopping click register.</p>
+                    <a class="btn btn-solid" [routerLink]="'/pages/register'">Create an Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section ends-->

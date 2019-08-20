@@ -1,0 +1,44 @@
+<div class="row" >
+    <div class="col-lg-6">
+      <div class="header-contact">
+        <ul>
+          <li>{{ 'topbar-title' | translate }}</li>
+          <li><i class="fa fa-phone" aria-hidden="true"></i>{{ 'call-us' | translate }}: 123 - 456 - 7890</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-6 text-right" *ngIf="!productsService?.catalogMode">
+      <ul class="header-dropdown">
+        <li class="compare">
+          <a [routerLink]="'/home/compare'"><i class="fa fa-random" aria-hidden="true"></i>{{ 'compare' | translate }}</a>
+        </li>
+        <li class="mobile-wishlist">
+          <a [routerLink]="'/home/wishlist'"><i class="fa fa-heart" aria-hidden="true"></i>{{ 'wishlist' | translate }}</a>
+        </li>
+        <li class="onhover-dropdown mobile-account">
+          <i class="fa fa-user" aria-hidden="true"></i> {{ 'my-account' | translate }}
+          <ul class="onhover-show-div">
+            <ng-template [ngIf]="!this.__common.isAuthenticated()">
+            <li>
+              <a [routerLink]="'/pages/login'" data-lng="en">
+                  {{ 'login' | translate }}
+              </a>
+            </li>
+            </ng-template>
+            <ng-template [ngIf]="this.__common.isAuthenticated()">
+            <li>
+              <a (click)="logout()" data-lng="es">
+                  {{ 'logout' | translate }}
+              </a>
+            </li>
+            </ng-template>
+          </ul>
+        </li>
+      </ul>
+    </div>
+</div>
+
+
+
+
+

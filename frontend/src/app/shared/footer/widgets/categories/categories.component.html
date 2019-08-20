@@ -1,0 +1,14 @@
+<div class="footer-title">
+    <h4>Categories</h4>
+</div>
+<div class="footer-contant">
+    <ul>
+        <li *ngFor="let menuItem of categoryItems">
+            <a [routerLink]="!menuItem.type ? null : [menuItem.path]">{{menuItem.title | translate}}</a>
+        </li>
+        <!--<li><a [routerLink]="'/home/left-sidebar/collection/women'">Womens Fashion</a></li>
+        <li><a [routerLink]="'/home/left-sidebar/collection/men'">Mens Fashion</a></li>
+        <li><a [routerLink]="'/home/left-sidebar/collection/kids'">Kids Fashion</a></li>
+        <li><a [routerLink]="'/home/left-sidebar/collection/all'">Featured</a></li>-->
+    </ul>
+</div>

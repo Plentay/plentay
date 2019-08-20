@@ -1,0 +1,130 @@
+
+
+.gray-bg {
+    background-color: #f3f3f3;
+}
+
+
+.main-menu .brand-logo {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+.sticky.fixed .pixelstrap a, .sticky.fixed .pixelstrap a:hover, .sticky.fixed .pixelstrap a:active {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+.sticky.fixed .onhover-div {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+.sticky.fixed .cart_qty_cls {
+    top: 10% !important;
+    right: -12px !important;
+}
+.sticky.fixed .toggle-nav {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+.sticky.fixed .onhover-div .show-div {
+    top: 58px !important;
+}
+.top-header {
+    background-color: #f6e552 !important;
+}
+.top-header .header-contact li {
+    color: #212121 !important;
+}
+.top-header .header-dropdown li a {
+    color: #212121 !important;
+}
+.top-header .header-dropdown li a i {
+    color: #212121 !important;
+}
+.top-header .header-dropdown li {
+    color: #212121 !important;
+}
+.top-header .onhover-dropdown .onhover-show-div {
+    background-color: #f6e552 !important;
+}
+
+.client-logo {
+    padding: 15px;
+    background-color: #f6e552;
+}
+.client-logo .slick-initialized .slick-slide {
+    background-color: #fff;
+    margin: 5px;
+}
+.product-box .img-wrapper .lable-block .lable3, .product-wrap .img-wrapper .lable-block .lable3 {
+    background-color: #f6e552 !important;
+    color: #fff !important;
+    font-size: 11px !important;
+    padding: 12px 7px !important;
+}
+.full-box .theme-card .offer-slider .product-box2 .media img {
+    height: auto !important;
+}
+.product-box .img-wrapper .lable-block .lable4, .product-wrap .img-wrapper .lable-block .lable4 {
+    top: 2px !important;
+    right: 2px !important;
+}
+.product-box .cart-info, .product-box .cart-wrap, .product-wrap .cart-info, .product-wrap .cart-wrap {
+    right: -8px !important;
+}
+.product-box .custom-product-box .img-wrapper .lable-block .lable4,
+.product-wrap .custom-product-box .img-wrapper .lable-block .lable4 {
+    right: -4px !important;
+}
+.product-m .slick-slide .img-wrapper {
+    overflow: visible;
+}
+.product-box .custom-product-box .cart-info,
+.product-box .custom-product-box .cart-wrap,
+.product-wrap .custom-product-box .cart-info, 
+.product-wrap .custom-product-box .cart-wrap {
+    right: -14px !important;
+}
+.product-box .custom-product-box .cart-info.cart-wrap,
+.product-box .custom-product-box .cart-wrap.cart-wrap,
+.product-wrap .custom-product-box .cart-info.cart-wrap,
+.product-wrap .custom-product-box .cart-wrap.cart-wrap {
+    bottom: -14px !important;
+}
+.theme-tab .tab-title li, .theme-tab .tab-title2 li {
+    background-color: #fff;
+}
+.pixelstrap a, .pixelstrap a:hover, .pixelstrap a:active {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.slider-product-box {
+    padding:10px 15px 20px;
+}
+.custom-product-box {
+    box-shadow: 0 2px 10px -3px rgba(0,0,0,0.15);
+    padding: 10px;
+    background-color: #fff;
+}
+.product-detail a {
+    font-size: 20px;
+    font-weight: bold;
+}
+.product-box .product-detail h6, .product-box .product-info h6, .product-wrap .product-detail h6, .product-wrap .product-info h6 {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px 0 15px 0 !important;
+    font-size: 18px !important;
+    color: #212121 !important;
+}
+
+
+
+
+
+  .color-picker {
+      display: none;
+  }
+  .rtl-btn {
+    display: none;
+}
