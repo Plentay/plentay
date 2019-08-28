@@ -34,6 +34,12 @@ export class CommonService {
     return this.__httpClient.get( url );
   }
 
+  search(search:string){
+    var url = this.APIBASEURL + 'api/product_search';
+    let dataToPost = { search };
+    return this.__httpClient.post( url, dataToPost, this.HEADERS );
+  }
+
   contactUs(name:string, mobile_number:string, subject:string, message:string){
     const url = this.APIBASEURL + 'api/contact-us';
     let dataToPost = { name, mobile_number, subject, message };

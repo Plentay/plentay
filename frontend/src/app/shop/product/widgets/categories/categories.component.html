@@ -7,8 +7,8 @@
   <h3 class="collapse-block-title">Category</h3>
   <div class="collection-collapse-block-content">
     <div class="collection-brand-filter">
-      <ul class="category-list" *ngFor="let cat of subCategories">
-        <li><a routerLink="/home/left-sidebar/collection/{{cat.slug}}">{{cat.name}}</a></li>
+      <ul class="category-list">
+        <li *ngFor="let cat of subCategories"><a routerLink="/home/left-sidebar/collection/{{cat.slug}}">{{cat.name}}</a></li>
       </ul>
     </div>
   </div>
